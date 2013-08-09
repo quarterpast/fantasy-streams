@@ -37,7 +37,9 @@ Readable::concat = (b)->
 	a = this
 
 	new class extends Readable
-		->@read-from = a
+		->
+			super ...
+			@read-from = a
 
 		_read: (size)->
 			if (@read-from.read size)?
@@ -48,5 +50,7 @@ Readable::concat = (b)->
 			else
 				@push null
 
-(Readable.of("hello ") ++ Readable.of("world"))
+Readable.empty = -> Readable.of ""
+
+(Readable.of("hello ") ++ Readable.of("world") ++ Readable.empty!  ++ Readable.empty!)
 .pipe process.stdout
