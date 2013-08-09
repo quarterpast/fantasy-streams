@@ -8,6 +8,7 @@ Readable.of = (body)->
 			@push body.slice @offset,@offset+size-1
 			@offset += size-1
 			if @offset > body.length then return @push null # end the Readable
+
 Buffer::concat = (o)-> Buffer.concat [this,o]
 
 Readable::take = (n)->
@@ -52,5 +53,31 @@ Readable::concat = (b)->
 
 Readable.empty = -> Readable.of ""
 
-(Readable.of("hello ") ++ Readable.of("world") ++ Readable.empty!  ++ Readable.empty!)
+# chain :: Readable a -> (a -> Readable b) -> Readable b
+Readable::chain = (f)->
+	orig = this
+
+	new class extends Readable
+
+		_read: (size)->
+			if (orig.read size)?
+				if ((f that)read size)?
+					@push that
+				else @push ""
+			else
+				@push null
+
+Readable::map = (f)->
+	@chain (a)~>
+		Readable.of f a
+
+Readable::ap = (m)->
+	@chain (f)->
+		m.map f
+
+Readable::eq = (o)->
+
+
+Readable.of "hello"
+.chain -> Readable.of "world"
 .pipe process.stdout
