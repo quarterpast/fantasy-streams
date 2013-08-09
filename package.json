@@ -1,0 +1,6 @@
+{
+  "name": "fantasy-streams",
+  "devDependencies": {
+    "LiveScript": "~1.2.0"
+  }
+}
