@@ -4,4 +4,5 @@ fantasy-land MonadPlus for node's Readable
 ```
 npm install fantasy-streams
 ```
-# ![](https://raw.github.com/puffnfresh/fantasy-land/master/logo.png)
+
+[![](https://raw.github.com/puffnfresh/fantasy-land/master/logo.png)](https://github.com/puffnfresh/fantasy-land)
